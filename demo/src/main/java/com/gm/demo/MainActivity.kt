@@ -57,15 +57,15 @@ class MainActivity : AppCompatActivity() {
                     return super.showGrantDialog(grantPermissionTo)
                 }
 
-                override fun showRationalDialog(requestCode: Int, acceptedPermissionList: String): Boolean {
+                override fun showRationalDialog(requestCode: Int, deniedPermission: String): Boolean {
                     Snackbar.make(
                         snackBarContainer,
-                        permissionManager?.getPermissionMessageDialog(acceptedPermissionList).toString(),
+                        permissionManager?.getPermissionMessageDialog(deniedPermission).toString(),
                         Snackbar.LENGTH_LONG
                     )
                         .setAction(getString(R.string.action_settings)) { GmPermissionManager.gotoSettings(this@MainActivity) }
                         .show()
-                    return super.showRationalDialog(requestCode, acceptedPermissionList)
+                    return super.showRationalDialog(requestCode, deniedPermission)
                 }
 
             })
@@ -105,15 +105,15 @@ class MainActivity : AppCompatActivity() {
                     return super.showGrantDialog(grantPermissionTo)
                 }
 
-                override fun showRationalDialog(requestCode: Int, acceptedPermissionList: String): Boolean {
+                override fun showRationalDialog(requestCode: Int, deniedPermission: String): Boolean {
                     Snackbar.make(
                         snackBarContainer,
-                        permissionManager?.getPermissionMessageDialog(acceptedPermissionList).toString(),
+                        permissionManager?.getPermissionMessageDialog(deniedPermission).toString(),
                         Snackbar.LENGTH_INDEFINITE
                     )
                         .setAction(getString(R.string.action_settings)) { GmPermissionManager.gotoSettings(this@MainActivity) }
                         .show()
-                    return super.showRationalDialog(requestCode, acceptedPermissionList)
+                    return super.showRationalDialog(requestCode, deniedPermission)
                 }
 
             })

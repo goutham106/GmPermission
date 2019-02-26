@@ -12,8 +12,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.gm.permission.GmPermissionManager
 import com.gm.permission.PermissionListener
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 /**
@@ -66,15 +64,15 @@ class BlankFragment : Fragment() {
                     return super.showGrantDialog(grantPermissionTo)
                 }
 
-                override fun showRationalDialog(requestCode: Int, acceptedPermissionList: String): Boolean {
+                override fun showRationalDialog(requestCode: Int, deniedPermission: String): Boolean {
                     (activity as FragmentActivity).openAlertDialog(
-                        message = permissionManager?.getPermissionMessageDialog(acceptedPermissionList).toString(),
+                        message = permissionManager?.getPermissionMessageDialog(deniedPermission).toString(),
                         positiveButtonName = getString(R.string.action_settings),
                         positiveListner = DialogInterface.OnClickListener { _, _ ->
                             GmPermissionManager.gotoSettings(activity as Activity)
                         }
                     )
-                    return super.showRationalDialog(requestCode, acceptedPermissionList)
+                    return super.showRationalDialog(requestCode, deniedPermission)
                 }
 
             })
@@ -113,15 +111,15 @@ class BlankFragment : Fragment() {
                     return super.showGrantDialog(grantPermissionTo)
                 }
 
-                override fun showRationalDialog(requestCode: Int, acceptedPermissionList: String): Boolean {
+                override fun showRationalDialog(requestCode: Int, deniedPermission: String): Boolean {
                     (activity as FragmentActivity).openAlertDialog(
-                        message = permissionManager?.getPermissionMessageDialog(acceptedPermissionList).toString(),
+                        message = permissionManager?.getPermissionMessageDialog(deniedPermission).toString(),
                         positiveButtonName = getString(R.string.action_settings),
                         positiveListner = DialogInterface.OnClickListener { _, _ ->
                             GmPermissionManager.gotoSettings(activity as Activity)
                         }
                     )
-                    return super.showRationalDialog(requestCode, acceptedPermissionList)
+                    return super.showRationalDialog(requestCode, deniedPermission)
                 }
 
             })

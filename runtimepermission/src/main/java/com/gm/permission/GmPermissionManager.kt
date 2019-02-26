@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,7 +19,7 @@ import androidx.fragment.app.Fragment
  */
 class GmPermissionManager {
 
-    private lateinit var permissionsToAsk: Array<String>
+    private lateinit var permissionsNeeded: Array<String>
     private lateinit var permissionListener: PermissionListener
     private lateinit var activity: Activity
     private var fragment: Fragment? = null
@@ -36,12 +37,11 @@ class GmPermissionManager {
         this.fragment = builder.fragment
         this.activity = builder.activity!!
         this.requestCode = builder.requestCode
-        this.permissionsToAsk = builder.permissionsToAsk
+        this.permissionsNeeded = builder.permissionsNeeded
         this.permissionListener = builder.permissionListener!!
         this.context = builder.context!!
         this.isFragment = builder.isFragment
     }
-
 
     companion object {
 
@@ -69,19 +69,22 @@ class GmPermissionManager {
 
     private fun request() {
         if (isFragment) {
-            fragment?.requestPermissions(permissionsToAsk, requestCode)
+            fragment?.requestPermissions(permissionsNeeded, requestCode)
         } else {
-            ActivityCompat.requestPermissions(activity, permissionsToAsk, requestCode)
+            ActivityCompat.requestPermissions(activity, permissionsNeeded, requestCode)
         }
     }
 
     fun requestPermissions() {
-        if (!hasPermissions(context, permissionsToAsk)) {
-            request()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!hasPermissions(context, permissionsNeeded)) {
+                request()
+            } else {
+                permissionListener.onPermissionsGranted(requestCode, permissionsNeeded.toString())
+            }
         } else {
-            permissionListener.onPermissionsGranted(requestCode, permissionsToAsk.toString())
+            permissionListener.onPermissionsGranted(requestCode, permissionsNeeded.toString())
         }
-
     }
 
     private fun shouldShowRationale(permission: String): Boolean {
@@ -133,9 +136,8 @@ class GmPermissionManager {
      * [Builder] class for [GmPermissionManager].
      * Use only this class to create a new instance of [GmPermissionManager]
      */
-    internal class Builder : IWith, IRequestCode, IPermissionResultCallback, INeededPermissions, IBuild {
-        internal lateinit var permissionsToAsk: Array<String>
-        internal lateinit var rationalMessage: String
+    internal class Builder : IWith, IRequestCode, IPermissionListner, INeededPermissions, IBuild {
+        internal lateinit var permissionsNeeded: Array<String>
         internal var permissionListener: PermissionListener? = null
         internal var activity: Activity? = null
         internal var fragment: Fragment? = null
@@ -164,8 +166,8 @@ class GmPermissionManager {
             return this
         }
 
-        override fun neededPermissions(permissions: Array<String>): IPermissionResultCallback {
-            permissionsToAsk = permissions
+        override fun neededPermissions(permissions: Array<String>): IPermissionListner {
+            permissionsNeeded = permissions
             return this
         }
 
@@ -178,14 +180,13 @@ class GmPermissionManager {
             return when {
                 this.permissionListener == null -> throw NullPointerException("Permission listener can not be null")
                 this.context == null -> throw NullPointerException("Context can not be null")
-                this.permissionsToAsk.isEmpty() -> throw IllegalArgumentException("Not asking for any permission. At least one permission is expected before calling build()")
+                this.permissionsNeeded.isEmpty() -> throw IllegalArgumentException("Not asking for any permission. At least one permission is expected before calling build()")
                 this.requestCode == -1 -> throw IllegalArgumentException("Request code is missing")
                 else -> GmPermissionManager(this)
             }
         }
 
     }
-
 
     interface IWith {
         fun with(activity: Activity): IRequestCode
@@ -198,17 +199,15 @@ class GmPermissionManager {
     }
 
     interface INeededPermissions {
-        fun neededPermissions(permissions: Array<String>): IPermissionResultCallback
+        fun neededPermissions(permissions: Array<String>): IPermissionListner
     }
 
-    interface IPermissionResultCallback {
+    interface IPermissionListner {
         fun setPermissionListner(permissionListener: PermissionListener): IBuild
     }
 
     interface IBuild {
-
         fun build(): GmPermissionManager
     }
-
 
 }

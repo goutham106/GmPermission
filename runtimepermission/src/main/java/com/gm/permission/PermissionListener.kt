@@ -13,5 +13,5 @@ interface PermissionListener {
 
     fun showGrantDialog(grantPermissionTo: String): Boolean = false
 
-    fun showRationalDialog(requestCode: Int, acceptedPermissionList: String): Boolean = true
+    fun showRationalDialog(requestCode: Int, deniedPermission: String): Boolean = true
 }
