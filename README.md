@@ -29,16 +29,20 @@ Create a `GmPermissionManager` object
  val permissionManager = GmPermissionManager.builder()
             .with(this)
             .requestCode(REQUEST_CODE)
-            .neededPermissions()
+            .neededPermissions(<IMPLEMENT_NEEDED PERMISSIONS IN STRING ARRAY>)
             .setPermissionListner(object : PermissionListener {
                 override fun onPermissionsGranted(requestCode: Int, acceptedPermission: String) {   
+			<ON PERMISSION GRANTED>
                 }
 
                 override fun showGrantDialog(grantPermissionTo: String): Boolean {
+			<IMPLEMENT Snackbar/Dialog to show when permission denied>
                     return super.showGrantDialog(grantPermissionTo)
                 }
 
                 override fun showRationalDialog(requestCode: Int, deniedPermission: String): Boolean {
+			<IMPLEMENT Snackbar/Dialog to show when permission denied with Don't ask again,Usually goto setting menu>
+			
                     return super.showRationalDialog(requestCode, deniedPermission)
                 }
             })
@@ -57,8 +61,7 @@ override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out
  ```kotlin
 permissionManager?.requestPermissions()
  ```
- 
-Override `onPermissionsGranted` , `showGrantDialog` and `showRationalDialog` methods
+
 
 
 
