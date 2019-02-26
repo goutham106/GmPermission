@@ -8,8 +8,8 @@ ext {
 
     libraryDescription = 'It is easy to handle the runtime permission'
 
-    siteUrl = 'https://github.com/goutham106/RuntimePermission'
-    gitUrl = 'https://github.com/goutham106/RuntimePermission.git'
+    siteUrl = 'https://github.com/goutham106/GmPermission'
+    gitUrl = 'https://github.com/goutham106/GmPermission.git'
 
     libraryVersion = '0.1'
 

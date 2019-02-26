@@ -9,7 +9,7 @@ import android.content.Context
  * Created on : 26/02/19.
  */
 object PermissionUtil {
-    val stringMap: HashMap<String, String> = hashMapOf()
+    private val stringMap: HashMap<String, String> = hashMapOf()
     fun getPermissionMessageDialog(context: Context, find: String): String {
 
         if (stringMap.size == 0) {

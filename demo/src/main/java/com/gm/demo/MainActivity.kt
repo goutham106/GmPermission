@@ -94,11 +94,10 @@ class MainActivity : AppCompatActivity() {
 
                 override fun showGrantDialog(grantPermissionTo: String): Boolean {
 
-
                     Snackbar.make(
                         snackBarContainer,
                         permissionManager?.getPermissionMessageDialog(grantPermissionTo).toString(),
-                        Snackbar.LENGTH_INDEFINITE
+                        Snackbar.LENGTH_LONG
                     )
                         .setAction(getString(R.string.action_grant)) { permissionManager?.requestPermissions() }
                         .show()
@@ -109,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.make(
                         snackBarContainer,
                         permissionManager?.getPermissionMessageDialog(deniedPermission).toString(),
-                        Snackbar.LENGTH_INDEFINITE
+                        Snackbar.LENGTH_LONG
                     )
                         .setAction(getString(R.string.action_settings)) { GmPermissionManager.gotoSettings(this@MainActivity) }
                         .show()
