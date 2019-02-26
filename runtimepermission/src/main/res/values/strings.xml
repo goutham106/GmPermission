@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GmRuntimePermission</string>
+    <string name="permission_denied_dangerous"> Permission to access %1s denied.</string>
 </resources>

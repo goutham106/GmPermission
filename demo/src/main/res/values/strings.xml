@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GmPermission</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="permissions_denied">Permissions denied.</string>
+    <string name="action_grant">Grant</string>
+    <string name="multiple_check">Multiple Check</string>
+    <string name="single_check">Single Check</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment">Fragment</string>
+</resources>

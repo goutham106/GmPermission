@@ -1,4 +1,4 @@
-package com.gm.arctemplate.ui.permission
+package com.gm.permission
 
 import android.app.Activity
 import android.content.Context
@@ -21,7 +21,7 @@ class GmPermissionManager {
     private lateinit var permissionsToAsk: Array<String>
     private lateinit var permissionListener: PermissionListener
     private lateinit var activity: Activity
-    private lateinit var fragment: Fragment
+    private var fragment: Fragment? = null
     private lateinit var context: Context
 
     private var isFragment: Boolean = false
@@ -33,7 +33,7 @@ class GmPermissionManager {
     }
 
     internal constructor(builder: Builder) {
-        this.fragment = builder.fragment!!
+        this.fragment = builder.fragment
         this.activity = builder.activity!!
         this.requestCode = builder.requestCode
         this.permissionsToAsk = builder.permissionsToAsk
@@ -45,7 +45,7 @@ class GmPermissionManager {
 
     companion object {
 
-        fun Builder(): IWith {
+        fun builder(): IWith {
             return Builder()
         }
 
@@ -69,7 +69,7 @@ class GmPermissionManager {
 
     private fun request() {
         if (isFragment) {
-            fragment.requestPermissions(permissionsToAsk, requestCode)
+            fragment?.requestPermissions(permissionsToAsk, requestCode)
         } else {
             ActivityCompat.requestPermissions(activity, permissionsToAsk, requestCode)
         }
@@ -87,17 +87,16 @@ class GmPermissionManager {
     private fun shouldShowRationale(permission: String): Boolean {
 
         shouldShowRationaleDialog = if (isFragment) {
-            fragment.shouldShowRequestPermissionRationale(permission)
+            fragment?.shouldShowRequestPermissionRationale(permission)!!
         } else {
             ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
         }
-
-
         return shouldShowRationaleDialog
-
-
     }
 
+    fun getPermissionMessageDialog(find: String): String {
+        return PermissionUtil.getPermissionMessageDialog(context, find)
+    }
 
     /**
      * Called by the user when he gets the call in Activity/Fragment
@@ -147,6 +146,7 @@ class GmPermissionManager {
         override fun with(activity: Activity): IRequestCode {
             this.activity = activity
             this.context = activity
+            this.fragment = null
             isFragment = false
             return this
         }
@@ -169,7 +169,7 @@ class GmPermissionManager {
             return this
         }
 
-        override fun setPermissionResultCallback(permissionListener: PermissionListener): IBuild {
+        override fun setPermissionListner(permissionListener: PermissionListener): IBuild {
             this.permissionListener = permissionListener
             return this
         }
@@ -202,7 +202,7 @@ class GmPermissionManager {
     }
 
     interface IPermissionResultCallback {
-        fun setPermissionResultCallback(permissionListener: PermissionListener): IBuild
+        fun setPermissionListner(permissionListener: PermissionListener): IBuild
     }
 
     interface IBuild {

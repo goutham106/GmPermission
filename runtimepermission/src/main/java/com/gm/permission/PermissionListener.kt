@@ -1,4 +1,4 @@
-package com.gm.arctemplate.ui.permission
+package com.gm.permission
 
 /**
  * Author     : Gowtham
@@ -11,7 +11,7 @@ interface PermissionListener {
 
     //fun onPermissionsDenied(requestCode: Int, deniedPermission: String)
 
-    fun showGrantDialog(grantPermissionTo: String): Boolean
+    fun showGrantDialog(grantPermissionTo: String): Boolean = false
 
-    fun showRationalDialog(requestCode: Int, acceptedPermissionList: String): Boolean
+    fun showRationalDialog(requestCode: Int, acceptedPermissionList: String): Boolean = true
 }
