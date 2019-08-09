@@ -11,7 +11,7 @@ ext {
     siteUrl = 'https://github.com/goutham106/GmPermission'
     gitUrl = 'https://github.com/goutham106/GmPermission.git'
 
-    libraryVersion = '0.1'
+    libraryVersion = '0.2'
 
     developerId = 'goutham106'
     developerName = 'Gowtham Parimalazhagan'
