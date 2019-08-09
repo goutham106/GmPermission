@@ -63,7 +63,9 @@ class MainActivity : AppCompatActivity() {
                         permissionManager?.getPermissionMessageDialog(deniedPermission).toString(),
                         Snackbar.LENGTH_LONG
                     )
-                        .setAction(getString(R.string.action_settings)) { GmPermissionManager.gotoSettings(this@MainActivity) }
+                        .setAction(getString(R.string.action_settings)) {
+                            GmPermissionManager.gotoSettings(this@MainActivity, 0)
+                        }
                         .show()
                     return super.showRationalDialog(requestCode, deniedPermission)
                 }
@@ -72,6 +74,15 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         permissionManager?.requestPermissions()
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0) {
+            permissionManager?.requestPermissions()
+        }
 
     }
 
@@ -110,7 +121,9 @@ class MainActivity : AppCompatActivity() {
                         permissionManager?.getPermissionMessageDialog(deniedPermission).toString(),
                         Snackbar.LENGTH_LONG
                     )
-                        .setAction(getString(R.string.action_settings)) { GmPermissionManager.gotoSettings(this@MainActivity) }
+                        .setAction(getString(R.string.action_settings)) {
+                            GmPermissionManager.gotoSettings(this@MainActivity)
+                        }
                         .show()
                     return super.showRationalDialog(requestCode, deniedPermission)
                 }

@@ -55,7 +55,19 @@ class GmPermissionManager {
             val uri = Uri.fromParts("package", activity.packageName, null)
             intent.data = uri
             activity.startActivity(intent)
+
         }
+
+        fun gotoSettings(activity: Activity, requestCode: Int) {
+            val intent = Intent()
+            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            val uri = Uri.fromParts("package", activity.packageName, null)
+            intent.data = uri
+            activity.startActivityForResult(intent, requestCode)
+
+        }
+
+
     }
 
     private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
