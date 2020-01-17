@@ -17,7 +17,7 @@ allprojects {
 Add the dependency
 ```gradle
 dependencies {
-    implementation 'com.github.goutham106:runtimepermission:0.1'
+    implementation 'com.github.goutham106:runtimepermission:0.2'
 	}
 ```
   
